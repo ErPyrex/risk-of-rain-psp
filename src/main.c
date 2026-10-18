@@ -1,28 +1,81 @@
 #include <stdio.h>
-#include "types.h"
+#include <unistd.h>
+#include "game.h"
 
 #ifdef PLATFORM_PSP
 #include <pspkernel.h>
 #include <pspdebug.h>
+#include <pspdisplay.h>
+#include <pspctrl.h>
+
 extern int setup_callbacks(void);
 extern int is_running(void);
 #endif
 
 int main(int argc, char *argv[]) {
+    (void)argc;
+    (void)argv;
+    GameState game;
+    game_init(&game);
+
 #ifdef PLATFORM_PSP
     setup_callbacks();
     pspDebugScreenInit();
-    pspDebugScreenPrintf("=== PSP Game Port Initialized ===\n");
-    pspDebugScreenPrintf("Ready for decompiled game logic.\n");
+    sceCtrlSetSamplingCycle(0);
+    sceCtrlSetSamplingMode(PSP_CTRL_MODE_ANALOG);
 
-    while (is_running()) {
+    SceCtrlData pad;
+    InputState input;
+    f32 dt = 1.0f / 60.0f;
+
+    while (is_running() && !game.game_over) {
+        sceCtrlReadBufferPositive(&pad, 1);
+
+        input.stick_x = ((f32)pad.Lx - 128.0f) / 128.0f;
+        input.stick_y = ((f32)pad.Ly - 128.0f) / 128.0f;
+        input.btn_jump = (pad.Buttons & PSP_CTRL_CROSS) != 0;
+        input.btn_interact = (pad.Buttons & PSP_CTRL_DOWN) != 0;
+        input.btn_skills[0] = (pad.Buttons & PSP_CTRL_SQUARE) != 0;
+        input.btn_skills[1] = (pad.Buttons & PSP_CTRL_TRIANGLE) != 0;
+        input.btn_skills[2] = (pad.Buttons & PSP_CTRL_CIRCLE) != 0;
+        input.btn_skills[3] = (pad.Buttons & PSP_CTRL_RTRIGGER) != 0;
+        input.btn_use_item = (pad.Buttons & PSP_CTRL_LTRIGGER) != 0;
+        input.btn_pause = (pad.Buttons & PSP_CTRL_START) != 0;
+
+        game_update(&game, &input, dt);
+
+        pspDebugScreenSetXY(0, 0);
+        game_render(&game);
+
         sceDisplayWaitVblankStart();
     }
 
     sceKernelExitGame();
 #else
-    printf("=== Game Port (Host Build) ===\n");
-    printf("Compilacion para pruebas en PC activa.\n");
+    printf("\n=== Risk of Rain PSP Core (Host Simulation Mode) ===\n");
+    printf("Simulando 250 frames de combate, dificultad y spawns...\n\n");
+
+    InputState input = {0};
+    f32 dt = 1.0f / 60.0f;
+
+    for (int frame = 1; frame <= 250; frame++) {
+        /* Simular jugador avanzando y disparando periódicamente */
+        input.stick_x = 0.8f;
+        input.btn_jump = (frame % 70 == 0);
+        input.btn_skills[0] = (frame % 20 == 0); /* Disparar cada 20 frames */
+        input.btn_skills[1] = (frame % 120 == 0); /* Habilidad 2 cada 2 segundos */
+
+        game_update(&game, &input, dt);
+        game_render(&game);
+        usleep(16000); /* ~60 FPS */
+    }
+
+    printf("\n\n✓ Simulacion completada con exito!\n");
+    printf("  Estado final -> Nivel: %u, Oro: %u, Kills: %u, Dificultad: %s (x%.2f)\n\n",
+           game.player.level, game.player.gold, game.player.kills,
+           director_get_stage_name(game.director.current_stage),
+           game.director.difficulty_coefficient);
 #endif
+
     return 0;
 }

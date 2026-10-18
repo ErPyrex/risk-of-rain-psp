@@ -1,7 +1,8 @@
 CC = gcc
-CFLAGS = -Wall -O2 -Iinclude
+CFLAGS = -Wall -Wextra -O2 -Iinclude
+LDFLAGS = -lm
 
-SRC = src/main.c
+SRC = src/main.c src/player.c src/director.c src/item.c src/game.c
 OBJ = $(SRC:.c=.o)
 TARGET = bin/game_host
 
@@ -11,13 +12,13 @@ host: $(TARGET)
 
 $(TARGET): $(OBJ)
 	mkdir -p bin
-	$(CC) $(OBJ) -o $(TARGET)
+	$(CC) $(OBJ) -o $(TARGET) $(LDFLAGS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJ) $(TARGET)
+	rm -f src/*.o $(TARGET)
 	rm -rf bin build
 
 .PHONY: all host clean

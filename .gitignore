@@ -17,12 +17,16 @@ bin/
 EBOOT.PBP
 PARAM.SFO
 
-# Original large files and dumps (evitar subir ROMs con copyright a git)
-original/*.bin
-original/*.iso
-original/*.rom
-original/*.exe
+# Original copyrighted game files
+original/*
 !original/.gitkeep
+
+# Extracted assets and raw decompiled code
+extracted/
+
+# Tools binaries
+tools/utmt/
+tools/utmt_nightly/
 
 # IDE and OS
 .vscode/
