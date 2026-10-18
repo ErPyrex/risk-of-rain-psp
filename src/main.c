@@ -8,6 +8,7 @@
 #include <pspdebug.h>
 #include <pspdisplay.h>
 #include <pspctrl.h>
+#include <math.h>
 
 extern int setup_callbacks(void);
 extern int is_running(void);
@@ -21,7 +22,6 @@ int main(int argc, char *argv[]) {
 
 #ifdef PLATFORM_PSP
     setup_callbacks();
-    pspDebugScreenInit();
     sceCtrlSetSamplingCycle(0);
     sceCtrlSetSamplingMode(PSP_CTRL_MODE_ANALOG);
 
@@ -32,8 +32,19 @@ int main(int argc, char *argv[]) {
     while (is_running() && !game.game_over) {
         sceCtrlReadBufferPositive(&pad, 1);
 
-        input.stick_x = ((f32)pad.Lx - 128.0f) / 128.0f;
-        input.stick_y = ((f32)pad.Ly - 128.0f) / 128.0f;
+        /* Soporte simultáneo para Stick Analógico y Cruceta (D-pad) */
+        f32 sx = ((f32)pad.Lx - 128.0f) / 128.0f;
+        if (pad.Buttons & PSP_CTRL_LEFT) sx = -1.0f;
+        if (pad.Buttons & PSP_CTRL_RIGHT) sx = 1.0f;
+        if (fabsf(sx) < 0.2f) sx = 0.0f;
+        input.stick_x = sx;
+
+        f32 sy = ((f32)pad.Ly - 128.0f) / 128.0f;
+        if (pad.Buttons & PSP_CTRL_UP) sy = -1.0f;
+        if (pad.Buttons & PSP_CTRL_DOWN) sy = 1.0f;
+        if (fabsf(sy) < 0.2f) sy = 0.0f;
+        input.stick_y = sy;
+
         input.btn_jump = (pad.Buttons & PSP_CTRL_CROSS) != 0;
         input.btn_interact = (pad.Buttons & PSP_CTRL_DOWN) != 0;
         input.btn_skills[0] = (pad.Buttons & PSP_CTRL_SQUARE) != 0;
@@ -44,13 +55,10 @@ int main(int argc, char *argv[]) {
         input.btn_pause = (pad.Buttons & PSP_CTRL_START) != 0;
 
         game_update(&game, &input, dt);
-
-        pspDebugScreenSetXY(0, 0);
         game_render(&game);
-
-        sceDisplayWaitVblankStart();
     }
 
+    render_cleanup();
     sceKernelExitGame();
 #else
     printf("\n=== Risk of Rain PSP Core (Host Simulation Mode) ===\n");

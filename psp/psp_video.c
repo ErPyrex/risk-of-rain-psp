@@ -32,12 +32,20 @@ typedef struct {
     s16 x, y, z;
 } SpriteVertex;
 
+#include "spritesheet_data.h"
+
 static void load_atlas_texture(void) {
     if (atlas_loaded) return;
+    /* 1. Intentar cargar atlas externo si existe en la Memory Stick */
     FILE* f = fopen("assets/spritesheet_rgba5551.raw", "rb");
+    if (!f) f = fopen("spritesheet_rgba5551.raw", "rb");
     if (f) {
         fread(atlas_texture, 2, ATLAS_WIDTH * ATLAS_HEIGHT, f);
         fclose(f);
+        atlas_loaded = true;
+    } else {
+        /* 2. Fallback autónomo: usar el atlas embebido en la ROM/EBOOT */
+        memcpy(atlas_texture, g_embedded_spritesheet, sizeof(atlas_texture));
         atlas_loaded = true;
     }
 }
