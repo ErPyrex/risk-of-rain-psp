@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -O2 -Iinclude
 LDFLAGS = -lm
 
-SRC = src/main.c src/player.c src/director.c src/item.c src/game.c
+SRC = src/main.c src/player.c src/director.c src/item.c src/game.c src/map.c src/render_host.c
 OBJ = $(SRC:.c=.o)
 TARGET = bin/game_host
 

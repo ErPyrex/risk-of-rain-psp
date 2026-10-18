@@ -87,8 +87,9 @@ typedef struct {
 } Player;
 
 /* Funciones del Jugador */
+typedef struct Map Map;
 void player_init(Player* player, SurvivorClass s_class, f32 spawn_x, f32 spawn_y);
-void player_update(Player* player, f32 move_x, bool jump_pressed, bool skill_keys[4], f32 dt);
+void player_update(Player* player, const Map* map, f32 move_x, f32 move_y, bool jump_pressed, bool skill_keys[4], f32 dt);
 void player_take_damage(Player* player, f32 dmg, bool is_crit);
 void player_add_item(Player* player, u16 item_id);
 void player_add_exp(Player* player, u32 amount);

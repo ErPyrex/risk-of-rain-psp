@@ -5,6 +5,7 @@
 #include "player.h"
 #include "director.h"
 #include "entity.h"
+#include "map.h"
 
 #define SCREEN_WIDTH  480
 #define SCREEN_HEIGHT 272
@@ -25,6 +26,7 @@ typedef struct {
 } Camera;
 
 typedef struct {
+    Map map;
     Player player;
     Director director;
     Enemy enemies[MAX_ENEMIES];

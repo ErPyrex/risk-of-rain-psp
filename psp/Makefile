@@ -1,5 +1,5 @@
 TARGET = ror_psp
-OBJS = ../src/main.o ../src/player.o ../src/director.o ../src/item.o ../src/game.o psp_main.o
+OBJS = ../src/main.o ../src/player.o ../src/director.o ../src/item.o ../src/game.o ../src/map.o psp_main.o psp_video.o
 
 INCDIR = ../include
 CFLAGS = -O2 -G0 -Wall -D__PSP__ -DPLATFORM_PSP

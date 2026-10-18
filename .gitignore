@@ -16,6 +16,8 @@ bin/
 *.PBP
 EBOOT.PBP
 PARAM.SFO
+*.bmp
+assets/*.raw
 
 # Original copyrighted game files
 original/*

@@ -1,4 +1,5 @@
 #include "player.h"
+#include "map.h"
 #include <math.h>
 
 #define GRAVITY 0.35f
@@ -75,7 +76,7 @@ void player_init(Player* player, SurvivorClass s_class, f32 spawn_x, f32 spawn_y
     player->skills[3].is_ready = true;
 }
 
-void player_update(Player* player, f32 move_x, bool jump_pressed, bool skill_keys[4], f32 dt) {
+void player_update(Player* player, const Map* map, f32 move_x, f32 move_y, bool jump_pressed, bool skill_keys[4], f32 dt) {
     (void)skill_keys;
     if (player->dead) return;
 
@@ -101,7 +102,31 @@ void player_update(Player* player, f32 move_x, bool jump_pressed, bool skill_key
         if (player->hp > player->max_hp) player->hp = player->max_hp;
     }
 
-    /* Movimiento horizontal */
+    /* 1. Comprobar si está sobre una cuerda (oRope) */
+    bool on_rope = map_check_rope(map, player->x, player->y - 10.0f);
+
+    if (on_rope && fabsf(move_y) > 0.3f) {
+        player->climbing = true;
+        player->grounded = false;
+        player->vx = 0.0f;
+        player->vy = move_y * (player->move_speed * 0.8f);
+        player->state = PLAYER_STATE_CLIMB;
+    }
+
+    if (player->climbing) {
+        if (!on_rope || jump_pressed) {
+            player->climbing = false;
+            if (jump_pressed) {
+                player->vy = JUMP_FORCE * 0.85f;
+            }
+        } else {
+            player->y += player->vy;
+            player->vy = 0.0f;
+            return;
+        }
+    }
+
+    /* 2. Movimiento horizontal y colisión con paredes */
     if (fabsf(move_x) > 0.1f) {
         player->vx = move_x * player->move_speed;
         player->facing_right = (move_x > 0);
@@ -114,29 +139,51 @@ void player_update(Player* player, f32 move_x, bool jump_pressed, bool skill_key
         }
     }
 
-    /* Salto */
+    /* Comprobar colisión horizontal con bloques sólidos (caja de 12x18) */
+    f32 next_x = player->x + player->vx;
+    if (map_check_collision(map, next_x - 6.0f, player->y - 18.0f, 12.0f, 16.0f)) {
+        player->vx = 0.0f;
+    } else {
+        player->x = next_x;
+    }
+
+    /* 3. Salto */
     if (jump_pressed && player->grounded) {
         player->vy = JUMP_FORCE;
         player->grounded = false;
         player->state = PLAYER_STATE_JUMP;
     }
 
-    /* Gravedad */
+    /* 4. Gravedad y caída */
     if (!player->grounded) {
         player->vy += GRAVITY;
         if (player->vy > MAX_FALL_SPEED) player->vy = MAX_FALL_SPEED;
         if (player->vy > 0.0f) player->state = PLAYER_STATE_FALL;
     }
 
-    /* Aplicar posición */
-    player->x += player->vx;
-    player->y += player->vy;
+    /* 5. Colisión vertical */
+    f32 next_y = player->y + player->vy;
 
-    /* Colisión simple con suelo (plataforma en y = 200 temporal) */
-    if (player->y >= 200.0f) {
-        player->y = 200.0f;
-        player->vy = 0.0f;
-        player->grounded = true;
+    if (player->vy >= 0.0f) {
+        /* Comprobar suelo (bloques sólidos o plataformas) */
+        if (map_check_ground(map, player->x - 5.0f, next_y, 10.0f, player->vy)) {
+            /* Alinear con la parte superior del tile */
+            s32 tile_y = (s32)((next_y + 1.0f) / TILE_SIZE);
+            player->y = (f32)(tile_y * TILE_SIZE);
+            player->vy = 0.0f;
+            player->grounded = true;
+        } else {
+            player->y = next_y;
+            player->grounded = false;
+        }
+    } else {
+        /* Comprobar colisión con techo */
+        if (map_check_collision(map, player->x - 5.0f, next_y - 19.0f, 10.0f, 4.0f)) {
+            player->vy = 0.0f;
+        } else {
+            player->y = next_y;
+        }
+        player->grounded = false;
     }
 }
 

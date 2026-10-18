@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include "game.h"
+#include "render.h"
 
 #ifdef PLATFORM_PSP
 #include <pspkernel.h>
@@ -53,7 +54,30 @@ int main(int argc, char *argv[]) {
     sceKernelExitGame();
 #else
     printf("\n=== Risk of Rain PSP Core (Host Simulation Mode) ===\n");
+    map_print_stats(&game.map);
+    map_print_ascii_minimap(&game.map);
     printf("Simulando 250 frames de combate, dificultad y spawns...\n\n");
+
+    /* Spawn de prueba para verificar sprites de Lemurian y Wisp en pantalla */
+    game.enemies[0].active = true;
+    game.enemies[0].type = ENEMY_LEMURIAN;
+    game.enemies[0].x = game.player.x + 150.0f;
+    game.enemies[0].y = game.player.y;
+    game.enemies[0].hp = 60.0f;
+    game.enemies[0].max_hp = 60.0f;
+    game.enemies[0].move_speed = 1.0f;
+    game.enemies[0].attack_range = 24.0f;
+    game.enemies[0].facing_right = false;
+
+    game.enemies[1].active = true;
+    game.enemies[1].type = ENEMY_WISP;
+    game.enemies[1].x = game.player.x + 220.0f;
+    game.enemies[1].y = game.player.y - 45.0f;
+    game.enemies[1].hp = 35.0f;
+    game.enemies[1].max_hp = 35.0f;
+    game.enemies[1].move_speed = 0.8f;
+    game.enemies[1].attack_range = 140.0f;
+    game.enemies[1].facing_right = false;
 
     InputState input = {0};
     f32 dt = 1.0f / 60.0f;
@@ -67,8 +91,13 @@ int main(int argc, char *argv[]) {
 
         game_update(&game, &input, dt);
         game_render(&game);
+        if (frame == 40) {
+            render_save_screenshot("assets/screen_capture.bmp");
+        }
         usleep(16000); /* ~60 FPS */
     }
+
+    render_save_screenshot("assets/screen_capture.bmp");
 
     printf("\n\n✓ Simulacion completada con exito!\n");
     printf("  Estado final -> Nivel: %u, Oro: %u, Kills: %u, Dificultad: %s (x%.2f)\n\n",

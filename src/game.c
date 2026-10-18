@@ -1,10 +1,13 @@
 #include "game.h"
+#include "render.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 
 void game_init(GameState* game) {
-    player_init(&game->player, CLASS_COMMANDO, 120.0f, 180.0f);
+    render_init();
+    map_generate_stage1(&game->map, 1337);
+    player_init(&game->player, CLASS_COMMANDO, game->map.spawn_x, game->map.spawn_y);
     director_init(&game->director, DIFF_RAINSTORM);
 
     for (int i = 0; i < MAX_ENEMIES; i++) game->enemies[i].active = false;
@@ -12,9 +15,9 @@ void game_init(GameState* game) {
     for (int i = 0; i < MAX_DAMAGE_POPUPS; i++) game->popups[i].active = false;
 
     game->camera.x = game->player.x - (SCREEN_WIDTH / 2.0f);
-    game->camera.y = 0.0f;
+    game->camera.y = game->player.y - (SCREEN_HEIGHT / 2.0f);
     game->camera.target_x = game->camera.x;
-    game->camera.target_y = 0.0f;
+    game->camera.target_y = game->camera.y;
 
     game->is_paused = false;
     game->game_over = false;
@@ -86,8 +89,14 @@ static void spawn_enemy(GameState* game, EnemyType type, f32 x, f32 y) {
                 e->move_speed = 1.2f;
                 e->attack_range = 140.0f;
                 e->gold_reward = 10;
-                e->exp_reward = 15;
-                e->point_cost = 15.0f;
+            } else if (type == ENEMY_BOSS_COLOSSUS) {
+                e->max_hp = 1200.0f * coeff;
+                e->damage = 25.0f * coeff;
+                e->move_speed = 0.8f;
+                e->attack_range = 40.0f;
+                e->gold_reward = 80;
+                e->exp_reward = 150;
+                e->point_cost = 250.0f;
             }
 
             e->hp = e->max_hp;
@@ -141,22 +150,59 @@ void game_update(GameState* game, const InputState* input, f32 dt) {
         p->skills[2].is_ready = false;
     }
 
-    /* 3. Actualizar Jugador */
-    player_update(p, input->stick_x, input->btn_jump, skill_keys, dt);
+    /* 3. Actualizar Jugador con Colisiones de Mapa y Cuerdas */
+    player_update(p, &game->map, input->stick_x, input->stick_y, input->btn_jump, skill_keys, dt);
     if (p->dead) {
         game->game_over = true;
     }
 
-    /* 4. Generación de Enemigos por el Director */
+    /* 3.1 Interacción con Objetos del Mapa (Cofres, Barriles, Teletransportador) */
+    if (input->btn_interact) {
+        MapObject* obj = map_find_nearby_interactable(&game->map, p->x, p->y, 36.0f);
+        if (obj != NULL) {
+            if (obj->type == OBJ_CHEST_SMALL || obj->type == OBJ_CHEST_LARGE) {
+                if (p->gold >= obj->cost) {
+                    p->gold -= obj->cost;
+                    obj->opened = true;
+                    player_add_item(p, obj->item_reward_id);
+                    game_spawn_popup(game, obj->x, obj->y - 16.0f, (f32)obj->cost, false);
+                }
+            } else if (obj->type == OBJ_BARREL) {
+                obj->opened = true;
+                u32 gold_reward = 15 + (rand() % 15);
+                p->gold += gold_reward;
+                game_spawn_popup(game, obj->x, obj->y - 16.0f, (f32)gold_reward, false);
+            } else if (obj->type == OBJ_TELEPORTER && !game->map.teleporter_active) {
+                game->map.teleporter_active = true;
+                /* Invocar Jefe del Nivel (Colossus) */
+                spawn_enemy(game, ENEMY_BOSS_COLOSSUS, obj->x + 60.0f, obj->y);
+            }
+        }
+    }
+
+    /* 3.2 Carga del Teletransportador */
+    if (game->map.teleporter_active && game->map.teleporter_charge < 100.0f) {
+        f32 dist_to_tele = fabsf(p->x - game->map.teleporter_x);
+        if (dist_to_tele < 320.0f) {
+            game->map.teleporter_charge += dt * 1.15f;
+            if (game->map.teleporter_charge >= 100.0f) {
+                game->map.teleporter_charge = 100.0f;
+            }
+        }
+    }
+
+    /* 4. Generación de Enemigos por el Director usando Spawns Válidos del Mapa */
     if (game->director.spawn_timer >= game->director.spawn_interval) {
         if (game->director.points >= 10.0f && game->director.active_enemies < MAX_ENEMIES) {
-            f32 spawn_side = ((rand() % 2) == 0) ? -1.0f : 1.0f;
-            f32 spawn_x = p->x + (spawn_side * (240.0f + (rand() % 60)));
-            EnemyType t = ((rand() % 10) < 7) ? ENEMY_LEMURIAN : ENEMY_WISP;
-            f32 spawn_y = (t == ENEMY_WISP) ? 140.0f : 200.0f;
-
-            spawn_enemy(game, t, spawn_x, spawn_y);
-            game->director.points -= 10.0f;
+            f32 spawn_x, spawn_y;
+            if (map_get_random_enemy_spawn(&game->map, p->x, 360.0f, &spawn_x, &spawn_y)) {
+                EnemyType t = ((rand() % 10) < 7) ? ENEMY_LEMURIAN : ENEMY_WISP;
+                if (t == ENEMY_WISP) {
+                    spawn_y -= 48.0f; /* Wisps flotan sobre el terreno */
+                }
+                spawn_enemy(game, t, spawn_x, spawn_y);
+                game->director.points -= 10.0f;
+            }
         }
         game->director.spawn_timer = 0.0f;
     }
@@ -246,17 +292,29 @@ void game_update(GameState* game, const InputState* input, f32 dt) {
 }
 
 void game_render(const GameState* game) {
-    /* En el host (PC) mostramos un HUD de telemetría */
+    /* 1. Renderizado visual a pantalla (480x272) */
+    render_begin_frame();
+    render_game_scene(game);
+    render_hud(game);
+    render_end_frame();
+
+#ifndef PLATFORM_PSP
+    /* 2. Telemetría de depuración en consola para Host */
     const Player* p = &game->player;
     const Director* d = &game->director;
 
-    printf("\r[HUD %02u:%02u | Dificultad: %-10s (x%.2f) | Pts: %4.0f] "
+    const char* tele_status = game->map.teleporter_active ? 
+        (game->map.teleporter_charge >= 100.0f ? "[TELE CHARGED!]" : "[TELE CHARGING...]") : "[TELE INACTIVE]";
+
+    printf("\r[HUD %02u:%02u | Dificultad: %-10s (x%.2f) | %-15s %3.0f%%] "
            "Player LVL:%2u HP:%3.0f/%3.0f ORO:$%-3u KILLS:%-2u ENEMIES:%-2u",
            d->minutes, d->seconds,
            director_get_stage_name(d->current_stage),
            d->difficulty_coefficient,
-           d->points,
+           tele_status,
+           game->map.teleporter_charge,
            p->level, p->hp, p->max_hp, p->gold, p->kills,
            d->active_enemies);
     fflush(stdout);
+#endif
 }
