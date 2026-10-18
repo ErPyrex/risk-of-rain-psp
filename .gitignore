@@ -1,0 +1,31 @@
+# Ghidra project files and locks
+*.rep/
+*.gpr
+*.lock*
+*.restore
+
+# Build artifacts
+build/
+bin/
+*.o
+*.obj
+*.a
+*.so
+*.elf
+*.prx
+*.PBP
+EBOOT.PBP
+PARAM.SFO
+
+# Original large files and dumps (evitar subir ROMs con copyright a git)
+original/*.bin
+original/*.iso
+original/*.rom
+original/*.exe
+!original/.gitkeep
+
+# IDE and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
