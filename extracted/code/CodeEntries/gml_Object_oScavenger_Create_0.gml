@@ -1,0 +1,11 @@
+event_inherited();
+init_boss();
+alarm[1] = 1;
+t = instance_create(x, y, oEfFlash);
+t.parent = id;
+t.image_blend = c_white;
+init_ai_default();
+z_range = 340;
+x_range = 600;
+c_range = 340;
+init_scavenger();

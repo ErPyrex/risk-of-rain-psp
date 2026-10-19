@@ -1,0 +1,10 @@
+event_inherited();
+t = instance_create(x, y, oEfFlash);
+t.parent = id;
+t.image_blend = c_red;
+init_ai_default();
+z_range = 40;
+x_range = 400;
+c_range = 200;
+v_range = 700;
+init_impGFake();

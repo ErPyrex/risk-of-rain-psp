@@ -1,0 +1,17 @@
+event_inherited();
+init_ai_default();
+z_range = 2300;
+x_range = 3400;
+c_range = 3400;
+init_boss();
+alarm[1] = 10;
+init_boss1();
+damage = 11 * power(global.enemy_buff, global.damage_co);
+hp = 1000 * power(global.enemy_buff, global.hp_co);
+maxhp = 1000 * power(global.enemy_buff, global.hp_co);
+cell = 2;
+name = "Umbra of Providence";
+name2 = "Shadow Clone";
+armor = 10;
+armor_buff = 3;
+last_target = -5;

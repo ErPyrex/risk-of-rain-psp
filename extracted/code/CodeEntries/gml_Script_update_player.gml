@@ -1,0 +1,12 @@
+ready = 0;
+class = argument0;
+x = argument1;
+y = argument2;
+var tbar = string_pos("|", argument3);
+user_name = string_copy(argument3, 0, tbar - 1);
+login = string_copy(argument3, tbar + 1, string_length(argument3) - tbar);
+player_set = 1;
+server_message_send(sock, 5, object_index, m_id, class, x, y, user_name + "|" + login);
+lag_check = 0;
+refresh_classes();
+return 1;

@@ -1,0 +1,10 @@
+image_speed = 0.2;
+alarm[0] = 40;
+state = 0;
+number = -1;
+direction = 90;
+speed = 3;
+target_x = 0;
+target_y = 0;
+t = -1;
+knockback = -1;

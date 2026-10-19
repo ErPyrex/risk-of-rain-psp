@@ -1,0 +1,16 @@
+listen = -1;
+p_t = -1;
+choice = 0;
+menu[0] = "Host Game";
+menu[1] = "IP: (Searching...)";
+menu[2] = "Port: ";
+menu[3] = "Player Name: ";
+menu[4] = "Join Game";
+menu[5] = "IP:";
+menu[6] = "Port:";
+menu[7] = "Player Name: ";
+true_choice = -1;
+true_choice_last = -1;
+port_open = 0;
+httpID_ip = http_get("http://www.riskofraingame.com/ip.php?nocache=1");
+httpID_port = http_get("http://www.riskofraingame.com/checkport.php?port=" + string(global.host_port));

@@ -1,0 +1,9 @@
+image_speed = 0;
+damage = 10;
+critical = 0;
+critical_chance = 0;
+critical_chance_bonus = 0;
+team = "playerproc";
+gravity = 0.12;
+ff = 0;
+speed = 4;

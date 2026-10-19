@@ -1,0 +1,14 @@
+rebound = 0;
+speed = 4;
+climb = 0;
+damage_coeff = 0;
+target = -50;
+alarm[1] = 180;
+ff = 0;
+hit_count = 0;
+homing_target = -2;
+yoff = 0;
+image_speed = 0.3;
+healed = 0;
+image_angle = random(360);
+knockback = -1;

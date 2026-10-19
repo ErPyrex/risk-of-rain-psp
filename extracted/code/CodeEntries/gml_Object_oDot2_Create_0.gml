@@ -1,0 +1,14 @@
+buff_count = 0;
+team = "noteam";
+pVspeed = 0;
+armor = -1;
+bunker = -1;
+state = -1;
+reflecting = -1;
+ticks = 1;
+damage = 1;
+alarm[0] = 30;
+textColor = 255;
+climb = 0;
+alarm[1] = 90;
+image_speed = 0.3;

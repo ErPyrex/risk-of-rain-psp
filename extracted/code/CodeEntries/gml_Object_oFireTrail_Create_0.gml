@@ -1,0 +1,15 @@
+buff_count = 0;
+team = "noteam";
+pVspeed = 0;
+armor = -1;
+bunker = -1;
+state = -1;
+reflecting = -1;
+image_speed = 0.2;
+alarm[0] = 60;
+hit = 0;
+alarm[1] = 60 * random_range(1, 1.5);
+move_contact_solid(270, 64);
+image_alpha = 1;
+image_xscale = choose(-1, 1);
+image_index = random(3);

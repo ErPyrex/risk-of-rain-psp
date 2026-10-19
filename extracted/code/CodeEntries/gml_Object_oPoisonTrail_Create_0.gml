@@ -1,0 +1,16 @@
+buff_count = 0;
+team = "noteam";
+pVspeed = 0;
+armor = -1;
+bunker = -1;
+state = -1;
+reflecting = -1;
+image_speed = 0;
+alarm[0] = 60;
+hit = 0;
+alarm[1] = 780;
+move_contact_solid(270, -1);
+image_xscale = choose(-1, 1);
+image_index = random(4);
+color = merge_color(c_yellow, #C9F24D, random(1));
+achievement_progress(33, 1);

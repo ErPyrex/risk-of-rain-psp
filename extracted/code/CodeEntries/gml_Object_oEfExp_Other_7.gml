@@ -1,0 +1,4 @@
+if (used == 1)
+{
+    instance_destroy();
+}

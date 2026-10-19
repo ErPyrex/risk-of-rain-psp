@@ -1,0 +1,9 @@
+alarm[0] = 300;
+alarm[1] = 1;
+speed = 0;
+hit = 0;
+image_speed = 0;
+image_xscale = choose(-1, 1);
+xx = x;
+yy = y;
+knockback = -1;

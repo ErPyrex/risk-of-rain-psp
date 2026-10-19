@@ -1,0 +1,16 @@
+draw_set_font(global.fntTinyAlt);
+draw_set_halign(fa_left);
+draw_set_valign(fa_bottom);
+draw_set_alpha(image_alpha - 0.1);
+draw_set_color(c_black);
+draw_rectangle((((view_xview[0] + (view_wview[0] / 2)) - (string_width(text1) / 2)) + 80) - 100, (view_yview[0] + (view_hview[0] / 2)) - 52, (((view_xview[0] + (view_wview[0] / 2)) - (string_width(text1) / 2)) + 80 + 4 + string_width(text1)) - 60, (view_yview[0] + (view_hview[0] / 2)) - 22, true);
+draw_set_alpha(image_alpha - 0.4);
+draw_rectangle((((view_xview[0] + (view_wview[0] / 2)) - (string_width(text1) / 2)) + 80) - 100, (view_yview[0] + (view_hview[0] / 2)) - 52, (((view_xview[0] + (view_wview[0] / 2)) - (string_width(text1) / 2)) + 80 + 4 + string_width(text1)) - 60, (view_yview[0] + (view_hview[0] / 2)) - 22, false);
+draw_sprite_ext(sprite_index, 1, round((((view_xview[0] + (view_wview[0] / 2)) - (string_width(text1) / 2)) + 80) - 80), round((view_yview[0] + (view_hview[0] / 2)) - 37), 1, 1, 0, c_white, image_alpha);
+draw_set_color(#EFD27B);
+draw_set_alpha(white_glow);
+draw_rectangle((((view_xview[0] + (view_wview[0] / 2)) - (string_width(text1) / 2)) + 80) - 100, (view_yview[0] + (view_hview[0] / 2)) - 52, (((view_xview[0] + (view_wview[0] / 2)) - (string_width(text1) / 2)) + 80 + 4 + string_width(text1)) - 60, (view_yview[0] + (view_hview[0] / 2)) - 22, false);
+draw_set_alpha(image_alpha);
+draw_text(round((((view_xview[0] + (view_wview[0] / 2)) - (string_width(text1) / 2)) + 80) - 60), round((view_yview[0] + (view_hview[0] / 2)) - 37), "ERROR");
+draw_text(round((((view_xview[0] + (view_wview[0] / 2)) - (string_width(text1) / 2)) + 80) - 60), round((view_yview[0] + (view_hview[0] / 2)) - 22), text1);
+draw_set_alpha(1);

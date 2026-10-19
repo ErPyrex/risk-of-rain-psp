@@ -1,0 +1,10 @@
+event_inherited();
+m_id = 0;
+cost = 0;
+active = 0;
+can_activate = 0;
+value = 4;
+image_speed = 0;
+found = 0;
+sprite_index = choose(sMedcab1, sMedcab2, sMedcab3);
+alarm[1] = 1;

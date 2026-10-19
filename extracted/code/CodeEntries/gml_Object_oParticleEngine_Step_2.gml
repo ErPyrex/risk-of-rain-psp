@@ -1,0 +1,1 @@
+updateParticles(global.handlerDamage);

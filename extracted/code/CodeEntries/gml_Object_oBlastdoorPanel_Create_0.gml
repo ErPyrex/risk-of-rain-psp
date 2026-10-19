@@ -1,0 +1,12 @@
+image_speed = 0;
+cost = 0;
+m_id = 0;
+move_contact_solid(270, -1);
+active = 0;
+can_activate = 0;
+time = 0;
+maxtime = 1800 + (900 * (global.diff_level == 3));
+value = 220;
+image_speed = 0;
+locked = 0;
+parent = instance_nearest(x, y, oBlastdoor);

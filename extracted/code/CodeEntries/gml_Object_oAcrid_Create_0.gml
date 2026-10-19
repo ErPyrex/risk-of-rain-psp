@@ -1,0 +1,10 @@
+event_inherited();
+init_ai_default();
+init_boss();
+z_range = 34;
+x_range = 40;
+knockback = -1;
+init_feral_wild();
+alarm[0] = 10;
+c_range = -1;
+v_range = -1;

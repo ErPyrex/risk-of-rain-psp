@@ -23,9 +23,9 @@ assets/*.raw
 original/*
 !original/.gitkeep
 
-# Extracted assets and raw decompiled code
-extracted/
-
+# Raw extracted textures (we use the optimized atlas assets/spritesheet.png)
+extracted/Sprites/
+extracted/EmbeddedTextures/
 # Tools binaries
 tools/utmt/
 tools/utmt_nightly/

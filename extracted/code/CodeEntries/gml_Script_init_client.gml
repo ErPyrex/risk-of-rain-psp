@@ -1,0 +1,11 @@
+global.host = 0;
+oInit.coop = 2;
+ip = global.client_ip;
+port = global.client_port;
+global.my_player.m_id = 0;
+oInit.pref_name = global.pref_name_client;
+lag_check = 0;
+ping_start = -1;
+ping = "---";
+sock = -1;
+global.sub_host = -1;

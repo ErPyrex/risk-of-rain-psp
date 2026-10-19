@@ -1,0 +1,10 @@
+image_speed = 0;
+image_index = 1;
+fade_alpha = 0;
+active = 0;
+selection = 0;
+owner = 167;
+move_contact_solid(270, -1);
+type = 2;
+count = 0;
+cost = 0;

@@ -1,0 +1,9 @@
+shook = 0;
+shake_frame = -1;
+alarm[0] = 180;
+x_off = 0;
+y_off = 0;
+elite_tier = -1;
+parent = -1;
+sprite_palette = 441;
+alarm[0] = 1;

@@ -1,0 +1,15 @@
+event_inherited();
+head = -1;
+s = -1;
+alarm[0] = 45;
+hp = 600 * power(global.enemy_buff, global.hp_co);
+maxhp = 600 * power(global.enemy_buff, global.hp_co);
+wormCount = 22 + irandom(4);
+target = 167;
+team = "enemy";
+max_speed = 1;
+damage = ceil(23 * (global.enemy_buff * 0.5));
+alarm[1] = 1;
+elite = 0;
+worm_speed = 8;
+worm_gravity = 0.1;

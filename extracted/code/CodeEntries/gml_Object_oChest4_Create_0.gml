@@ -1,0 +1,14 @@
+init_chest();
+move_contact_solid(270, -1);
+active = 0;
+can_activate = 0;
+value = 60;
+found = 0;
+cost = ceil(55 * ((2 * global.enemy_buff) - 1));
+image_speed = 0.2;
+yo = 0;
+ff = 0;
+item_id = -1;
+item_id_previous = -1;
+sprite_id = 732;
+countdown = 30;

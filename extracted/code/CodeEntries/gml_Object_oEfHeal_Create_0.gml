@@ -1,0 +1,13 @@
+buff_count = 0;
+team = "noteam";
+pVspeed = 0;
+armor = -1;
+bunker = -1;
+state = -1;
+reflecting = -1;
+image_speed = 0.2;
+value = 10;
+used = 0;
+alarm[0] = random_range(30, 40);
+direction = 45;
+speed = 2 + random(2);

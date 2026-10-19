@@ -1,0 +1,1 @@
+draw_sprite_ext(sprite_index, image_index, oStartMenu.x + lengthdir_x((393 - y_offset) + sprite_height, direction), oStartMenu.y + lengthdir_y((393 - y_offset) + sprite_height, direction), -1, 1, direction - 90, c_white, 1);

@@ -1,0 +1,13 @@
+event_inherited();
+image_speed = 0;
+image_index = choose(1, 2);
+head = 0;
+son = -1;
+target_x = -1;
+target_y = -1;
+hp = 0;
+dot_immune = 50;
+team = "enemy";
+invincible = 0;
+alarm[0] = 60;
+tex = sprite_get_texture(sBeastFire, 0);

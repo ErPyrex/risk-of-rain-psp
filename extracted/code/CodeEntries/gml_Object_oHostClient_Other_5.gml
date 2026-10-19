@@ -1,0 +1,12 @@
+d_ini_open("Prefs.ini");
+d_ini_write_real("Online", "host_port", global.host_port);
+d_ini_write_string("Online", "client_ip", global.client_ip);
+d_ini_write_real("Online", "client_port", global.client_port);
+d_ini_write_string("Online", "pref_name_client", global.pref_name_client);
+d_ini_write_string("Online", "pref_name_host", global.pref_name_host);
+d_ini_write_real("Online", "max_players_online", global.max_players_online);
+d_ini_write_real("Online", "client_throttle", global.client_throttle);
+d_ini_write_real("Online", "client_timeout", global.client_timeout);
+d_ini_write_real("Online", "server_timeout", global.server_timeout);
+d_ini_write_real("Online", "hide_ip", global.hide_ip);
+d_ini_close();

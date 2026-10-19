@@ -1,0 +1,17 @@
+ti = -4;
+init_multiplayer_locals(1);
+user_name = "Player";
+login = "";
+child_poi = instance_create(x, y, oPOI);
+child_poi.parent = id;
+player_set = 1;
+knockback = -1;
+buff_count = 0;
+team = "noteam";
+pVspeed = 0;
+armor = -1;
+bunker = -1;
+state = -1;
+reflecting = -1;
+alarm[6] = 1;
+alarm[11] = 30;

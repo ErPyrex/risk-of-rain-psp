@@ -1,0 +1,13 @@
+master = -5;
+init_default();
+sprite_idle = 338;
+sprite_walk = 341;
+sprite_jump = 341;
+sprite_love = 340;
+sprite_buff = 339;
+pHmax = 1;
+alarm[0] = random_range(5, 40);
+pVmax = 3;
+tether_range = random_range(10, 60);
+image_alpha = 0.9;
+alarm[1] = 300;

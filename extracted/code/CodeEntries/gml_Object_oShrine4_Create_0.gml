@@ -1,0 +1,14 @@
+init_chest();
+move_contact_solid(270, -1);
+active = 0;
+can_activate = 0;
+value = 60;
+image_speed = 0;
+found = 0;
+cost = ceil(40 * ((2 * global.enemy_buff) - 1));
+charges = 2;
+name = "Fire Shrine";
+critical_chance = 0;
+critical_chance_bonus = 0;
+damage = 14 * power(global.enemy_buff, global.damage_co);
+sprite_death = 382;

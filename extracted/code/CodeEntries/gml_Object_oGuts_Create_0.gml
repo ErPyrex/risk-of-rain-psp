@@ -1,0 +1,12 @@
+image_speed = 0;
+gravity = 0.1 + random(0.1);
+bounces = 0;
+image_index = random(2);
+image_angle = random(360);
+hspeed = random_range(-2, 2);
+vspeed = random_range(-2, 2);
+particle_type = global.pBlood1;
+particle_color = 16777215;
+particle_number = 1;
+bounce = 1;
+bounce_max = 0;

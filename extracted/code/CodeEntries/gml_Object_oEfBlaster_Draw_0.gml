@@ -1,0 +1,10 @@
+draw_set_alpha(0.8);
+draw_set_color(#CF6666);
+draw_line_width(x, y, xprevious, yprevious, 3);
+draw_line_width(xpprevious, ypprevious, xprevious, yprevious, 3);
+draw_set_alpha(0.4);
+draw_set_color(c_white);
+draw_line_width(x, y, xprevious, yprevious, 1);
+draw_line_width(xpprevious, ypprevious, xprevious, yprevious, 1);
+xpprevious = xprevious;
+ypprevious = yprevious;

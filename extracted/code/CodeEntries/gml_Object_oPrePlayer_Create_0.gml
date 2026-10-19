@@ -1,0 +1,11 @@
+my_player = -1;
+class = -1;
+ready = 0;
+sock = -1;
+m_id = 0;
+player_set = 0;
+user_name = "Player";
+login = "";
+ping = "";
+lag = 0;
+alarm[11] = 30;

@@ -1,0 +1,9 @@
+alarm[0] = 60;
+direction = random(360);
+speed = random_range(5, 5);
+target = instance_nearest_variable(x, y, 321, "team", "enemy");
+targetx = -1;
+targety = -1;
+image_blend = choose(#22B14C, #44878E, #B03422);
+firing = 0;
+lightning = 0;

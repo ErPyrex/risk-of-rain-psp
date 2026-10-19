@@ -1,0 +1,9 @@
+image_blend = #8D8DA9;
+offset = 0;
+tip = 0;
+image_speed = 0;
+ff = 0;
+yo = 0;
+alarm[0] = 1;
+lx = 0;
+ly = 0;

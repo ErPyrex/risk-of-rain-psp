@@ -1,0 +1,16 @@
+event_inherited();
+image_speed = 0;
+fade_alpha = 0;
+active = 0;
+can_activate = 0;
+selection = 0;
+owner = -5;
+move_contact_solid(270, -1);
+count = 0;
+cost = 0;
+type = 3;
+image_index = 2;
+select_cd = 0;
+m_id = global.chest_index;
+global.chest_index += 1;
+server_message_send(0, 12, object_index, m_id, x, y);

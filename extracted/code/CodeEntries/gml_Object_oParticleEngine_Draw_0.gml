@@ -1,0 +1,1 @@
+drawParticles(global.handlerDamage);

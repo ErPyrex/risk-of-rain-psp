@@ -1,0 +1,17 @@
+buff_count = 0;
+pVspeed = 0;
+armor = -1;
+bunker = -1;
+state = -1;
+reflecting = -1;
+image_angle2 = 45;
+image_xscale = 1.3;
+image_yscale = 1.3;
+image_alpha = 0;
+image_angle3 = 0;
+alarm[1] = 60 * random_range(1.5, 1.7);
+skull = 0;
+skull_index = 0;
+attacked = 0;
+skull_alpha = 1;
+team = "enemy";

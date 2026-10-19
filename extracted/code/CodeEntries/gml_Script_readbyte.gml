@@ -1,0 +1,1 @@
+return yybuffer_read();

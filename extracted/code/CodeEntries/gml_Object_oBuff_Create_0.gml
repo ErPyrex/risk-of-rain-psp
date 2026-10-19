@@ -1,0 +1,10 @@
+damage = 0;
+attack_speed = 0;
+fire_trail = 0;
+bonus_speed = 0;
+lifesteal = 0;
+gold_on_hit = 0;
+image_speed = 0;
+parent = -1;
+alarm[1] = 1;
+image_alpha = 0.8;

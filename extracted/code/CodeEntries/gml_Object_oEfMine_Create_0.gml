@@ -1,0 +1,11 @@
+image_speed = 0.3;
+alarm[0] = 60;
+alarm[1] = 600 + random(20);
+active = 0;
+damage = 10;
+critical = 0;
+critical_chance = 0;
+critical_chance_bonus = 0;
+team = "playerproc";
+move_contact_solid(270, -1);
+instant = 0;

@@ -1,0 +1,9 @@
+thigh_length = 30;
+walk_speed = 3;
+ff = 0;
+angle = 270;
+s = instance_create(x, y + thigh_length, oCalf);
+s.parent = id;
+t = 0;
+ty = 0;
+pHspeed = 0;

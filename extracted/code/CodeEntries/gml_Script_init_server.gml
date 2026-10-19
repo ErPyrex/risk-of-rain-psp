@@ -1,0 +1,12 @@
+oInit.coop = 2;
+global.host = 1;
+global.host_player = global.my_player;
+item_dibs = -1;
+players = ds_list_create();
+socks = ds_list_create();
+m_id = 0;
+global.my_player.user_name = global.pref_name_host;
+oInit.pref_name = global.my_player.user_name;
+global.my_player.m_id = set_m_id(global.my_player);
+game_pass = "";
+timeout = 0;

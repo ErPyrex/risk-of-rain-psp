@@ -1,0 +1,10 @@
+init_chest();
+move_contact_solid(270, -1);
+active = 0;
+can_activate = 0;
+value = 50;
+image_speed = 0;
+found = 0;
+cost = 0.5;
+charges = 2;
+sprite_death = 378;

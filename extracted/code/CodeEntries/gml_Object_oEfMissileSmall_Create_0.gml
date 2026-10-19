@@ -1,0 +1,18 @@
+image_speed = 0.3;
+speed = 2.5;
+direction = 70 + random(40);
+damage = 10;
+critical = 0;
+team = "player";
+hit = 0;
+alarm[0] = 300;
+target = -5;
+explosive_shot = 0;
+lightning = 0;
+lifesteal = 0;
+missile = 0;
+f = 0;
+yy = 0;
+caster_play(124, global.volume, 3);
+global.width = 1;
+knockback = -1;

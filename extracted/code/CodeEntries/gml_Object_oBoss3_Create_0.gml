@@ -1,0 +1,16 @@
+event_inherited();
+init_ai_default();
+z_range = 2300;
+x_range = 3400;
+c_range = 3400;
+init_boss();
+alarm[1] = 10;
+init_boss3();
+cell = 2;
+name = "Providence";
+name2 = "Bulwark of the Weak";
+armor = 10;
+armor_buff = 3;
+last_target = -5;
+alarm[0] = 30;
+image_xscale = 0;

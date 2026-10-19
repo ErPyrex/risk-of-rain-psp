@@ -1,0 +1,28 @@
+draw_set_alpha(1);
+draw_sprite(sprite_index, -1, x, y);
+if (can_activate == 1 && active == 0)
+{
+    draw_set_halign(fa_left);
+    draw_set_valign(fa_bottom);
+    draw_set_font(global.fntTinyAlt);
+    draw_set_color(c_white);
+    if (global.joystick_on == 0)
+    {
+        draw_ctext(x - 80, round(y) - 32, "Press &y&'" + string_key(global.yes_key) + "'&!& to purchase chest &y&($" + string(cost) + ")&!&");
+    }
+    else
+    {
+        draw_ctext(x - 80, round(y) - 32, "Press '" + string_key(global.yes_key_gp) + "' to purchase chest &y&($" + string(cost) + ")&!&");
+    }
+}
+if (active == 0)
+{
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_bottom);
+    draw_set_font(global.fntDamage);
+    draw_set_color(#EFD27B);
+    draw_set_alpha(0.7 + random(0.15));
+    draw_text(round(x), y + 18, string(cost));
+    draw_sprite_ext(sDamage, 11, round(x - (string_width(string(cost)) / 2) - 8), y + 9, 1, 1, 0, #EFD27B, draw_get_alpha());
+    draw_set_alpha(1);
+}

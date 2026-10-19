@@ -1,0 +1,10 @@
+alarm[0] = 60 * random_range(1.5, 1.7);
+image_speed = 0.32;
+image_xscale = choose(1, -1);
+move_contact_solid(270, 500);
+damage = ceil(35 * global.enemy_buff);
+team = "enemy";
+critical = random(100) < 10;
+critical_chance = 0;
+critical_chance_bonus = 0;
+instant = 0;

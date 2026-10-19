@@ -1,0 +1,13 @@
+ban = ds_list_create();
+joining = ds_list_create();
+global.my_player = instance_create(0, 0, oPrePlayer);
+global.in_game = 1;
+alarm[0] = 30;
+global.chatting = 0;
+chat = ds_list_create();
+color = ds_list_create();
+alpha = 30;
+listen = -1;
+new_players = ds_list_create();
+alarm[1] = 1;
+init_server();

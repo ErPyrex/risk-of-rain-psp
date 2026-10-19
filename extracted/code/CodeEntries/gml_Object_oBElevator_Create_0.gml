@@ -1,0 +1,9 @@
+active = 0;
+fall_speed = 0;
+width_box = 7;
+alarm[0] = 1;
+can_activate = 0;
+text = "";
+ddirection = 1;
+image_speed = 0;
+yy = 0;

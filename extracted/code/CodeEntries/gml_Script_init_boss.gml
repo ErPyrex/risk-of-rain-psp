@@ -1,0 +1,10 @@
+elite_tier = -1;
+blast = -1;
+force_death = 0;
+health_tier = 10;
+boss_death_index = oInit.image_index;
+point_value = 0;
+pVspeed = 0;
+armor = -1;
+bunker = -1;
+reflecting = -1;

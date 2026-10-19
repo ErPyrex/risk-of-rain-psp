@@ -1,0 +1,13 @@
+initializeParticlesSystem();
+typeDamage = newParticleType();
+partTypeSetAnimation(typeDamage, 934, 0, 1);
+partTypeSetSpeed(typeDamage, 0.5, 0.5, 0, 0);
+partTypeSetDirection(typeDamage, 90, 90, 0);
+partTypeSetAlpha(typeDamage, 3, 3, 0);
+partTypeSetRotation(typeDamage, 0, 0, 0);
+partTypeSetLife(typeDamage, 40, 40);
+partTypeSetSize(typeDamage, 10, 10);
+partTypeSetColor(typeDamage, 16777215, 16777215);
+partTypeSetBlendMode(typeDamage, 0);
+partTypeSetText(typeDamage, 1);
+global.handlerDamage = newParticleHandler(typeDamage);

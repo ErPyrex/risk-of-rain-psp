@@ -1,0 +1,9 @@
+team = "playerproc";
+image_speed = 0;
+alarm[0] = 30;
+alarm[1] = 240;
+vsp = 0.1;
+damage = 0;
+critical = 0;
+critical_chance = 0;
+critical_chance_bonus = 0;

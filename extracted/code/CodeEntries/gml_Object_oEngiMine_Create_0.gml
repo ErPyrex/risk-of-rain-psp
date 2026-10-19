@@ -1,0 +1,9 @@
+image_speed = 0.3;
+alarm[0] = 30;
+alarm[1] = 7200;
+active = 0;
+instant = 0;
+fired = 0;
+caster_play(119, global.volume, 1.5);
+vsp = 1;
+set = 0;

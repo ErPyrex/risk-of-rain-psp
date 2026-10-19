@@ -1,0 +1,10 @@
+init_drone(1);
+hp = 250 * power(global.enemy_buff, global.hp_co);
+maxhp = 250 * power(global.enemy_buff, global.hp_co);
+sprite_idle = 335;
+sprite_idle_broken = 335;
+sprite_shoot1 = 336;
+sprite_shoot1_broken = 336;
+knockback = -1;
+alarm[0] = 60 * random_range(10, 11);
+alarm[1] = random(150);

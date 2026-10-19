@@ -1,0 +1,14 @@
+m_id = 0;
+ready = 0;
+ping = "---";
+sock = -1;
+lag = 0;
+ghost_x = x;
+ghost_y = y;
+force_swap = 0;
+player_set = 0;
+force_z = 0;
+force_x = 0;
+force_c = 0;
+force_v = 0;
+fore_use = 0;

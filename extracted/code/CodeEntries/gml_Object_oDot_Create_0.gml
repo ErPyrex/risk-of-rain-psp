@@ -1,0 +1,11 @@
+buff_count = 0;
+pVspeed = 0;
+armor = -1;
+bunker = -1;
+state = -1;
+reflecting = -1;
+ticks = 1;
+damage = 1;
+alarm[0] = 1;
+textColor = 255;
+team = "noteam";

@@ -1,0 +1,9 @@
+image_xscale = 1.5;
+image_yscale = 1.5;
+image_alpha = 0;
+position_1 = 0;
+position_2 = 0;
+position_3 = 0;
+alarm[1] = 40;
+reverse_alpha = 0;
+ring_alpha = -0.6;
